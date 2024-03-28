@@ -1,0 +1,33 @@
+{
+  "name": "@bobvanderlinden/semantic-release-pull-request-analyzer",
+  "description": "semantic-release plugin to analyze commits using merged pull request labels",
+  "version": "0.0.0-development",
+  "type": "module",
+  "author": "Bob van der Linden <bobvanderlinden@gmail.com>",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "index.js"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bobvanderlinden/semantic-release-pull-request-analyzer.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/bobvanderlinden/semantic-release-pull-request-analyzer",
+  "exports": "./index.js",
+  "main": "./index.js",
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "peerDependencies": {
+    "semantic-release": "^23.0.6"
+  }
+}
