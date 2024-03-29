@@ -141,6 +141,9 @@ export async function analyzeCommits({ labels }, context) {
       repo,
       commit,
     });
+
+    // Skip commits that are not part of a pull request.
+    // Skip commits that are part of a pull request without labels.
     if (!pullRequestInfo?.labels) {
       continue;
     }
