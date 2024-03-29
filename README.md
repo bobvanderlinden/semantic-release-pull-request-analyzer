@@ -17,8 +17,8 @@ The plugin can be configured in the [semantic-release configuration file](https:
       "@bobvanderlinden/semantic-release-pull-request-analyzer",
       {
         "labels": {
-          "feature": "minor",
-          "fix": "patch",
+          "enhancement": "minor",
+          "documentation": "patch",
           "bug": "patch"
         }
       }
@@ -29,11 +29,41 @@ The plugin can be configured in the [semantic-release configuration file](https:
 
 With this example:
 
-* the merged pull requests with label `feature` will be associated with a `minor` release.
-* the merged pull requests with label `fix` will be associated with a `patch` release.
-
-Make sure you do _not_ include `@semantic-release/commit-analyzer` nor `@semantic-release/release-notes-generator`. These plugins rely on semantic-commit messages.
-
-In addition, you should set the environment variable `GITHUB_TOKEN` in order for the plugin to communicate with GitHub APIs.
+- merged pull requests with label `enhancement` will result in a `minor` release.
+- merged pull requests with label `documentation` will result in a `patch` release.
+- merged pull requests with label `bug` will result in a `patch` release.
 
 Note that this plugin will only associate pull requests with the merge-commit title `Merged pull request #XXX from`. This is the default merge-commit title that GitHub uses for non-squash, non-rebase merges.
+
+## Configuration
+
+Make sure there is a valid `GITHUB_TOKEN` that has at least `contents: read` rights.
+
+Make sure `@semantic-release/commit-analyzer` nor `@semantic-release/release-notes-generator` are included plugins. These plugins conflict with the commit analyzer and release note generator of `semantic-release-pull-request-analyzer`.
+
+### Options
+
+| Option | Description |
+| ------ | ----------- |
+| `labels` | Required. An object that maps GitHub pull request labels to release types. The keys are the label names and the values are the corresponding release types. |
+| `repository` | Optional. The owner/repo of the GitHub repository. Example `myusername/myproject`. Defaults to using `GITHUB_REPOSITORY`. |
+| `apiUrl` | Optional. The GitHub API URL. Defaults to `GITHUB_API_URL`. |
+| `token` | Optional. The GitHub token. Defaults to `GITHUB_TOKEN`. |
+
+Possible release types are:
+
+- `prerelease`
+- `prepatch`
+- `patch`
+- `preminor`
+- `minor`
+- `premajor`
+- `major`
+
+### Environment variables
+
+| Variable              | Description                           |
+| --------------------- | ------------------------------------- |
+| `GITHUB_TOKEN`        | Required. Token for GitHub API access. |
+| `GITHUB_API_URL`      | Optional. URL for the GitHub API. Defaults to `https://api.github.com`              |
+| `GITHUB_REPOSITORY`   | Optional. Owner/repo of the GitHub repository. Example `myusername/myproject`. Defaults to [`repositoryUrl`](https://semantic-release.gitbook.io/semantic-release/usage/configuration#repositoryurl)       |
