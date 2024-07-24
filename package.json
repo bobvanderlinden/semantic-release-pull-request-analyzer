@@ -28,6 +28,6 @@
     ]
   },
   "peerDependencies": {
-    "semantic-release": "^23.0.6"
+    "semantic-release": ">=23.0.0"
   }
 }
