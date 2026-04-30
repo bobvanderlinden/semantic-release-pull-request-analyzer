@@ -90,12 +90,28 @@ function getRepositoryInfo(pluginConfig, context) {
   );
 }
 
+export function extractPullRequestNumber(subject) {
+  // Pattern 1: Normal merge commit - "Merge pull request #123 from ..."
+  const normalMergeMatch = /^Merge pull request #(\d+) from/.exec(subject);
+  if (normalMergeMatch) {
+    return parseInt(normalMergeMatch[1], 10);
+  }
+
+  // Pattern 2: Squash merge - "Title (#123)"
+  // GitHub's default squash merge format appends the PR number at the end
+  const squashMergeMatch = /\(#(\d+)\)\s*$/.exec(subject);
+  if (squashMergeMatch) {
+    return parseInt(squashMergeMatch[1], 10);
+  }
+
+  return null;
+}
+
 async function getPullRequestInfo({ fetchGitHubApi, owner, repo, commit }) {
-  const match = /^Merge pull request #(\d+) from/.exec(commit.subject);
-  if (!match) {
+  const pullRequestNumber = extractPullRequestNumber(commit.subject);
+  if (!pullRequestNumber) {
     return;
   }
-  const pullRequestNumber = parseInt(match[1], 10);
   const pullRequestInfo = await fetchGitHubApi(
     `/repos/${owner}/${repo}/pulls/${pullRequestNumber}`
   );

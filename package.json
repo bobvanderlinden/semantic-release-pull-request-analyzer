@@ -18,6 +18,9 @@
     "type": "git",
     "url": "https://github.com/bobvanderlinden/semantic-release-pull-request-analyzer.git"
   },
+  "scripts": {
+    "test": "node --test"
+  },
   "license": "MIT",
   "homepage": "https://github.com/bobvanderlinden/semantic-release-pull-request-analyzer",
   "exports": "./index.js",
