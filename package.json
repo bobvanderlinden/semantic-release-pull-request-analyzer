@@ -30,6 +30,9 @@
       "main"
     ]
   },
+  "devDependencies": {
+    "semantic-release": "^25.0.3"
+  },
   "peerDependencies": {
     "semantic-release": ">=21.0.0"
   }
